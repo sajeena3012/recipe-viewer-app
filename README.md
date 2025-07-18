@@ -1,99 +1,120 @@
 # Recipe Viewer with Favorites
 
-This project is a simple **Recipe Viewer** web application built with **Next.js 13+**. The app allows users to browse recipes, view detailed information, save favorite recipes, and manage them.
-
----
+A modern, responsive recipe browsing application built with Next.js 14, featuring TheMealDB API integration and MongoDB Atlas for favorites management.
 
 ## Features
 
-### 1. View Recipes
-- Displays a list of recipes fetched from the [TheMealDB API].
-- Shows recipe names, images.
-
-### 2. Recipe Details
-- Displays detailed information about a recipe:
-  - Name
-  - Ingredients
-  - Instructions
-  - Dish image
-
-### 3. Manage Favorites
-- Mark recipes as favorites from the recipe details page.
-- Store favorites in a MongoDB database.
-- View and manage (remove) favorites in a dedicated "Favorites" tab.
-
-### 4. Responsive Design
-- Fully responsive UI, compatible with mobile, tablet, and desktop devices.
-
----
+- **Recipe Browsing**: Browse random recipes or search by name
+- **Recipe Details**: View detailed recipe information including ingredients, instructions, and cooking videos
+- **Favorites System**: Save and manage your favorite recipes with MongoDB Atlas
+- **Responsive Design**: Optimized for mobile, tablet, and desktop devices
+- **Modern UI**: Clean, intuitive interface with smooth animations
 
 ## Tech Stack
 
-### Frontend
-- **Next.js** (App Directory for server and client components)
-- **React** (for interactivity)
-- **Tailwind CSS** (for styling)
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB Atlas
+- **External API**: TheMealDB API
+- **Deployment**: Vercel (recommended)
 
-### Backend
-- **Next.js API Routes** for managing favorites.
-- **MongoDB Atlas** for storing favorite recipes.
+## Getting Started
 
----
+### Prerequisites
 
-## Project Structure
+- Node.js 18+ installed
+- MongoDB Atlas account
+- Git
 
-app/
-├── api/
-│   └── favorites/
-│       └── route.js        # API routes for managing favorites
-├── recipe/
-│   ├── [id]/
-│   │   ├── page.js         # Server Component for recipe details
-│   │   └── RecipeDetailClient.js # Client Component for interactivity
-├── favorites/
-│   ├── page.js             # Server Component for favorites
-│   └── FavoritesClient.js  # Client Component for interactivity
-└── layout.js               # Global layout and navigation
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd recipe-viewer
 ```
 
----
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up MongoDB Atlas:
+   - Create a MongoDB Atlas account at https://cloud.mongodb.com
+   - Create a new cluster
+   - Get your connection string
+   - Create a `.env.local` file and add your MongoDB URI:
+```env
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/recipe-viewer?retryWrites=true&w=majority
+```
+
+4. Run the development server:
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## API Endpoints
 
-### 1. **GET /api/favorites**
-- Fetches all favorite recipes from the database.
-
-### 2. **POST /api/favorites**
-- Adds a new favorite recipe to the database.
-- **Request Body:**
-json
-  {
-    "recipeId": "52772",
-    "recipeName": "Chicken Handi",
-    "imageUrl": "https://www.themealdb.com/images/media/meals/wyxwsp1486979827.jpg"
-  }
-  ```
-
-### 3. **DELETE /api/favorites?id=<favorite_id>**
-- Deletes a favorite recipe from the database.
-
----
+- `GET /api/favorites` - Get all favorite recipes
+- `POST /api/favorites` - Add a recipe to favorites
+- `DELETE /api/favorites/[id]` - Remove a recipe from favorites
 
 ## Deployment
 
-1. **Host on Vercel**:
-   - Push the project to GitHub.
-   - Link the repository to [Vercel](https://vercel.com/).
-   - Set up environment variables in the Vercel dashboard.
+### Vercel (Recommended)
 
-2. **MongoDB Atlas**:
-   - MongoDB Atlas cluster is accessible from the deployed environment.
+1. Push your code to GitHub
+2. Connect your GitHub repository to Vercel
+3. Add your `MONGODB_URI` environment variable in Vercel settings
+4. Deploy
 
+### Manual Deployment
 
-## Future Enhancements
-- Add user authentication for personalized favorite management.
-- Implement search and filtering options for recipes.
-- Include random recipe suggestions on the homepage.
+1. Build the project:
+```bash
+npm run build
+```
+
+2. Export static files:
+```bash
+npm run export
+```
+
+3. Deploy the `out` folder to your hosting provider
+
+## Project Structure
+
+```
+├── app/
+│   ├── api/favorites/          # API routes for favorites
+│   ├── recipe/[id]/           # Dynamic recipe detail pages
+│   ├── favorites/             # Favorites page
+│   └── page.tsx               # Home page
+├── components/
+│   ├── ui/                    # Reusable UI components
+│   ├── RecipeCard.tsx         # Recipe card component
+│   ├── SearchBar.tsx          # Search functionality
+│   └── Navigation.tsx         # Navigation bar
+├── lib/
+│   ├── api.ts                 # TheMealDB API functions
+│   ├── mongodb.ts             # MongoDB connection
+│   └── types.ts               # TypeScript types
+├── models/
+│   └── Favorite.ts            # MongoDB favorite model
+└── hooks/
+    └── useFavorites.ts        # Custom hook for favorites
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+This project is licensed under the MIT License.
