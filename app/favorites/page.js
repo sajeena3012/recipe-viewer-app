@@ -2,14 +2,18 @@ import FavoritesClient from "./FavoritesClient";
 
 async function getFavorites() {
   try {
-    // Use relative path for production and full URL for development
-    const apiUrl = process.env.NODE_ENV === 'development' 
-      ? 'http://localhost:3000/api/favorites'
+    // Use environment-based URL with proper fallbacks
+    const apiUrl = process.env.NODE_ENV === 'development'
+      ? process.env.NEXT_PUBLIC_SITE_URL 
+        ? `${process.env.NEXT_PUBLIC_SITE_URL}/api/favorites`
+        : 'http://localhost:3000/api/favorites'
       : '/api/favorites';
 
     const response = await fetch(apiUrl, {
       cache: "no-store",
-      next: { tags: ['favorites'] }
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
 
     if (!response.ok) {
