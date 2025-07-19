@@ -97,18 +97,18 @@ export async function POST(req) {
 }
 
 export async function GET() {
+  console.log("MONGODB_URI:", process.env.MONGODB_URI ? "exists" : "missing");
   try {
     await connectDB();
+    console.log("Successfully connected to MongoDB");
     const favorites = await Favorite.find();
-    return NextResponse.json(favorites, { 
-      status: 200, 
-      headers: corsHeaders 
-    });
+    console.log(`Found ${favorites.length} favorites`);
+    return NextResponse.json(favorites, { status: 200 });
   } catch (error) {
-    console.error("Error fetching favorites:", error);
+    console.error("Full error:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" }, 
-      { status: 500, headers: corsHeaders }
+      { error: error.message },
+      { status: 500 }
     );
   }
 }
