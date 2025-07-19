@@ -2,19 +2,23 @@ import FavoritesClient from "./FavoritesClient";
 
 async function getFavorites() {
   try {
-    // Remove baseUrl and use relative path
-    const response = await fetch('/api/favorites', {
+    // Use relative path for production and full URL for development
+    const apiUrl = process.env.NODE_ENV === 'development' 
+      ? 'http://localhost:3000/api/favorites'
+      : '/api/favorites';
+
+    const response = await fetch(apiUrl, {
       cache: "no-store",
       next: { tags: ['favorites'] }
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Failed to fetch: ${response.status}`);
     }
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to fetch favorites:", error);
+    console.error("Fetch error:", error);
     return []; // Return empty array as fallback
   }
 }
