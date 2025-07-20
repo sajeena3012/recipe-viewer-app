@@ -1,16 +1,14 @@
+// MAKE THIS PAGE DYNAMIC TO PREVENT NEXT.JS STATIC RENDERING ERRORS
+export const dynamic = 'force-dynamic';
+
 import FavoritesClient from "./FavoritesClient";
 
 async function getFavorites() {
   try {
-    // Use environment-based URL with proper fallbacks
-    const apiUrl = process.env.NODE_ENV === 'development'
-      ? process.env.NEXT_PUBLIC_SITE_URL 
-        ? `${process.env.NEXT_PUBLIC_SITE_URL}/api/favorites`
-        : 'http://localhost:3000/api/favorites'
-      : '/api/favorites';
-
+    // Use relative URL for internal route; absolute not required
+    const apiUrl = "/api/favorites";
     const response = await fetch(apiUrl, {
-      cache: "no-store",
+      cache: "no-store", // always fetch fresh
       headers: {
         'Content-Type': 'application/json'
       }
