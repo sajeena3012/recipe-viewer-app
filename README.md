@@ -91,7 +91,7 @@ npm run export
 │   ├── api/favorites/          # API routes for favorites
 │   ├── recipe/[id]/           # Dynamic recipe detail pages
 │   ├── favorites/             # Favorites page
-│   └── page.tsx               # Home page
+│   └── page.js                # Home page
 ├── components/
 │   ├── ui/                    # Reusable UI components
 │   ├── RecipeCard.tsx         # Recipe card component
